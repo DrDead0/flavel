@@ -1,10 +1,11 @@
-# Blog Application - Backend Server
+# Flavel - Backend Server
 
 A robust Node.js backend server for the blog application, featuring JWT authentication, MongoDB integration, image upload with ImageKit, and comprehensive blog management APIs.
 
 ## 🚀 Features
 
 ### Core Functionality
+
 - 🔐 JWT-based authentication system
 - 📝 Complete blog CRUD operations
 - 📸 Image upload and optimization with ImageKit
@@ -13,6 +14,7 @@ A robust Node.js backend server for the blog application, featuring JWT authenti
 - 📊 RESTful API architecture
 
 ### Security Features
+
 - 🔒 JWT token authentication
 - 🛡️ Input validation and sanitization
 - 🔐 Environment variable configuration
@@ -78,11 +80,13 @@ IMAGEKIT_URL_ENDPOINT="https://ik.imagekit.io/your-imagekit-id"
 ## 🚀 Running the Server
 
 ### Development Mode
+
 ```bash
 npm run dev
 ```
 
 ### Production Mode
+
 ```bash
 npm start
 ```
@@ -94,10 +98,11 @@ The server will start on `http://localhost:3000`
 ### Authentication Routes (`/api/admin`)
 
 | Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| POST | `/login` | Admin login | ❌ |
+| ------ | -------- | ----------- | ------------- |
+| POST   | `/login` | Admin login | ❌            |
 
 **Login Request:**
+
 ```json
 {
   "email": "admin@example.com",
@@ -106,6 +111,7 @@ The server will start on `http://localhost:3000`
 ```
 
 **Login Response:**
+
 ```json
 {
   "success": true,
@@ -115,13 +121,13 @@ The server will start on `http://localhost:3000`
 
 ### Blog Management Routes (`/api/blog`)
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| POST | `/add` | Create new blog post | ✅ |
-| GET | `/list` | Get all published blogs | ❌ |
-| GET | `/:id` | Get blog by ID | ❌ |
-| DELETE | `/delete` | Delete blog post | ✅ |
-| PUT | `/toggle` | Toggle publish status | ✅ |
+| Method | Endpoint  | Description             | Auth Required |
+| ------ | --------- | ----------------------- | ------------- |
+| POST   | `/add`    | Create new blog post    | ✅            |
+| GET    | `/list`   | Get all published blogs | ❌            |
+| GET    | `/:id`    | Get blog by ID          | ❌            |
+| DELETE | `/delete` | Delete blog post        | ✅            |
+| PUT    | `/toggle` | Toggle publish status   | ✅            |
 
 ### Blog Creation (`POST /api/blog/add`)
 
@@ -134,6 +140,7 @@ blog: [string] # JSON string with blog data
 ```
 
 **Blog JSON Structure:**
+
 ```json
 {
   "title": "Blog Title",
@@ -172,6 +179,7 @@ server/
 ## 🗄️ Database Schema
 
 ### Blog Model
+
 ```javascript
 {
   title: {
@@ -218,6 +226,7 @@ server/
 4. **Token Validation**: Middleware verifies token for protected routes
 
 ### Example Protected Request:
+
 ```bash
 curl -X POST http://localhost:3000/api/blog/add \
   -H "Authorization: your-jwt-token" \
@@ -234,6 +243,7 @@ curl -X POST http://localhost:3000/api/blog/add \
 5. **Database Storage**: Saves optimized URL to MongoDB
 
 ### Image Optimization Features:
+
 - Automatic WebP conversion
 - Quality optimization
 - Responsive image sizing
@@ -242,16 +252,19 @@ curl -X POST http://localhost:3000/api/blog/add \
 ## 🛡️ Security Measures
 
 ### Input Validation
+
 - Required field validation
 - Data type checking
 - File upload restrictions
 
 ### Authentication Security
+
 - JWT token expiration
 - Secure secret key usage
 - Protected route middleware
 
 ### Database Security
+
 - Mongoose schema validation
 - Input sanitization
 - Connection string security
@@ -273,6 +286,7 @@ curl -X POST http://localhost:3000/api/blog/add \
 ### Using cURL
 
 **Login:**
+
 ```bash
 curl -X POST http://localhost:3000/api/admin/login \
   -H "Content-Type: application/json" \
@@ -280,11 +294,13 @@ curl -X POST http://localhost:3000/api/admin/login \
 ```
 
 **Get All Blogs:**
+
 ```bash
 curl -X GET http://localhost:3000/api/blog/list
 ```
 
 **Add Blog Post:**
+
 ```bash
 curl -X POST http://localhost:3000/api/blog/add \
   -H "Authorization: your-jwt-token" \
@@ -302,16 +318,19 @@ curl -X POST http://localhost:3000/api/blog/add \
 ## 🐛 Common Issues & Troubleshooting
 
 ### Database Connection Issues
+
 - Verify MongoDB URI in `.env`
 - Check database permissions
 - Ensure MongoDB service is running
 
 ### ImageKit Upload Issues
+
 - Verify API credentials
 - Check folder permissions
 - Validate image file formats
 
 ### Authentication Problems
+
 - Verify JWT secret configuration
 - Check token format in requests
 - Validate admin credentials
@@ -326,12 +345,16 @@ curl -X POST http://localhost:3000/api/blog/add \
 ## 🚀 Deployment
 
 ### Environment Setup
+
 1. Set production environment variables
 2. Configure MongoDB Atlas or production database
 3. Set up ImageKit production settings
 4. Configure CORS for frontend domain
 
 ### Deployment Platforms
+
+- **Vercel**: Fast Node.js deployment with Git and CDN.
+- **Netlify**: Simple Node.js deployment with Git.
 - **Heroku**: Easy deployment with git integration
 - **Railway**: Modern deployment platform
 - **DigitalOcean**: VPS deployment

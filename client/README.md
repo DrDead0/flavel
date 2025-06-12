@@ -1,4 +1,4 @@
-# Blog Application - Frontend
+# Flavel - Frontend
 
 A modern React frontend for the blog application built with Vite, featuring a clean interface for reading blogs and an admin dashboard for content management.
 
@@ -27,7 +27,7 @@ A modern React frontend for the blog application built with Vite, featuring a cl
 
 - **React 18** - Modern React with hooks
 - **Vite** - Fast build tool and dev server
-- **CSS3** - Custom styling with responsive design
+- **Tailwind CSS** - Custom styling with responsive design
 - **React Router** - Client-side routing
 - **ESLint** - Code linting and formatting
 
@@ -95,7 +95,7 @@ src/
 
 ## 🎨 Styling
 
-The application uses custom CSS with:
+The application uses custom Tailwind CSS with:
 
 - Responsive design principles
 - Modern CSS Grid and Flexbox layouts

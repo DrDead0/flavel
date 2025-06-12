@@ -1,6 +1,8 @@
 import fs from "fs";
 import imageKit from "../configs/imageKit.js";
 import Blog from "../models/Blog.js";
+import Comment from "../models/Comment.js";
+import main from "../configs/gemini.js";
 
 export const addBlog = async (req, res) => {
   try {
@@ -13,13 +15,10 @@ export const addBlog = async (req, res) => {
     if (!title || !description || !category || !imageFile) {
       return res.json({ success: false, message: "Missing required fields" });
     }
-    const fileBuffer = fs.readFileSync(imageFile.path);
-
-    //upload image to imageKit
+    const fileBuffer = fs.readFileSync(imageFile.path); //upload image to imageKit
     const response = await imageKit.upload({
       file: fileBuffer, // required
       fileName: imageFile.originalname, // required
-      folder: "/blogs",
     });
 
     //optimization through imagekit url transformation
@@ -59,8 +58,8 @@ export const getAllBlogs = async (req, res) => {
 };
 export const getBlogById = async (req, res) => {
   try {
-    const { blogID } = req.params;
-    const blog = await Blog.findById(blogID);
+    const { id } = req.params;
+    const blog = await Blog.findById(id);
     if (!blog) {
       return res.json({ success: false, message: "Blog not found" });
     }
@@ -74,6 +73,9 @@ export const deleteBlogById = async (req, res) => {
   try {
     const { id } = req.body;
     await Blog.findByIdAndDelete(id);
+
+    //delete comments associated with the blog
+    await Comment.deleteMany({ blog: id });
     res.json({ success: true, message: "Blog deleted successfully" });
   } catch (error) {
     res.json({ success: false, message: error.message });
@@ -87,6 +89,41 @@ export const togglePublish = async (req, res) => {
     blog.isPublished = !blog.isPublished;
     await blog.save();
     res.json({ success: true, message: "Blog updated successfully" });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
+export const addComment = async (req, res) => {
+  try {
+    const { blog, name, content } = req.body;
+    await Comment.create({ blog, name, content });
+    res.json({ success: true, message: "Comment added successfully" });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
+export const getBlogComments = async (req, res) => {
+  try {
+    const { blogId } = req.body;
+    const comments = await Comment.find({
+      blog: blogId,
+      isApproved: true,
+    }).sort({ createdAt: -1 });
+    res.json({ success: true, comments });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
+export const generateContent = async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    const content = await main(
+      prompt + "Generate a blog content for this topic in simple text format "
+    );
+    res.json({ success: true, content });
   } catch (error) {
     res.json({ success: false, message: error.message });
   }
